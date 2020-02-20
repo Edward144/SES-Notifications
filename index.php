@@ -12,7 +12,7 @@
                 font-family: sans-serif;
             }
             
-            .logTable {
+            #logTable {
                 min-width: 1440px;
             }
             
