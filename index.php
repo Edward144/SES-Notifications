@@ -5,10 +5,15 @@
 <html>
     <head>
         <title>Amazon SES Notification Log | Setsquare</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <style>
             body {
                 font-family: sans-serif;
+            }
+            
+            .logTable {
+                min-width: 1440px;
             }
             
             table {
