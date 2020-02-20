@@ -14,3 +14,5 @@ Visiting index.php without a POST request will display a table of all notificati
 getInfo.php is accessed via AJAX request and includes the code to pull the JSON for a specific row ID within the database. jQuery then appends an absolute div to the body with all possible JSON information displayed.
 
 refreshRows.php is also accessed via AJAX request every 5 seconds to pull in any new rows that have been added to the database, and prepends that information to the top of the log table.
+
+After setting up the SNS endpoint all you need to do is create a database and enter the correct details into databaseConnect.php
