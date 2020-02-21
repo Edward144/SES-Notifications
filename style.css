@@ -1,0 +1,188 @@
+body {
+    font-family: sans-serif;
+    height: 100vh;
+    width: 100%;
+    width: 100vw;
+    overflow: hidden;
+    margin: 0;
+    padding: 0.5em;
+    box-sizing: border-box;
+    min-height: 20000px;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    list-style: none;
+    margin: 1em auto;
+    padding: 0;
+}
+
+.legend li {
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    width: 33.333%;
+    max-width: 200px;
+}
+
+#logTable {
+    min-width: 768px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table tr th {
+    text-align: left;
+    background: #ccc;
+}
+
+table tr td, 
+table tr th {
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+}
+
+table tr td {
+    overflow-y: auto;
+    word-break: break-all;
+}
+
+table .bounce td,
+.legend .bounce {
+    background: rgba(255, 152, 0, 0.5);
+    color: brown;
+}
+
+table .complaint td,
+.legend .complaint {
+    background: rgba(255, 0, 0, 0.5);
+    color: darkred;
+}
+
+table .delivery td:last-child,
+.legend .delivery {
+    background: rgba(0, 220, 0, 0.5);
+    color: darkgreen;
+}
+
+.fullOverlay {
+    cursor: no-drop;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.fullMessage {
+    position: absolute;
+    height: calc(100% - 2em);
+    width: calc(100% - 2em);
+    max-height: 800px;
+    max-width: 1000px;
+    background: #fff;
+    border: 1px solid #777;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 1em;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 2000;
+    word-break: break-all;
+}
+
+.fullMessage #close {
+    width: 35px;
+    height: 35px;
+    background: #777;
+    color: #000;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.fullMessage #close:hover {
+    background: rgba(255, 0, 0, 0.5);
+    color: #fff;
+}
+
+.fullMessage label {
+    font-weight: bold;
+}
+
+.fullMessage p {
+    margin: 0 auto;
+}
+
+.fullMessage .codeBlock {
+    padding: 1em;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+}
+
+.fullMessage .codeBlock pre {
+    white-space: pre-wrap;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 0.5em 0;
+    box-sizing: border-box;
+    justify-content: flex-start;
+}
+
+.pagination a {
+    margin: 0.5em;
+    padding: 0.5em;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #fff;
+    background: #ccc;
+}
+
+.pagination a:hover {
+    background: #777;
+}
+
+@media only screen and (max-width: 768px) {
+    #logTable tr td:nth-child(3),
+    #logTable tr td:nth-child(4),
+    #logTable tr td:nth-child(6),
+    #logTable tr td:nth-child(7),
+    #logTable tr th:nth-child(3),
+    #logTable tr th:nth-child(4),
+    #logTable tr th:nth-child(6),
+    #logTable tr th:nth-child(7) {
+        display: none;
+    }
+
+    #logTable tr td:nth-child(1),
+    #logTable tr th:nth-child(1) {
+        max-width: 120px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    table .delivery td {
+        background: rgba(0, 220, 0, 0.5);
+        color: darkgreen;
+    }
+}
