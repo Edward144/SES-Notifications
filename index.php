@@ -7,13 +7,20 @@
         <title>Amazon SES Notification Log | Setsquare</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <style>
+        <style>  
             html {
                 overflow: hidden;
             }
             
             body {
                 font-family: sans-serif;
+                height: 100vh;
+                width: 100%;
+                width: 100vw;
+                overflow: auto;
+                margin: 0;
+                padding: 0.5em;
+                box-sizing: border-box;
             }
             
             #logTable {
