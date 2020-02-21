@@ -299,7 +299,7 @@
                                 }
                             }
                         ?>
-                        <tr <?php echo ($message['bounce'] ? 'id="bounce"' : ($message['complaint'] ? 'id="complaint"' : '')); ?>>
+                        <tr id="<?php foreach($message as $index => $value) { echo ($index != 'mail' && $index != 'notificationType' ? $index . ' ' : ''); }; ?>">
                             <td><a href="#" onclick="javascript: fullInfo(<?php echo $row['id']; ?>);"><?php echo $message['mail']['messageId']; ?></a></td>
                             <td><?php echo $message['mail']['source']; ?></td>
                             <td><?php echo $message['mail']['sourceIp']; ?></td>
