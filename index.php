@@ -93,7 +93,6 @@
                 </p>
 
                 <p>
-                    <label>Search:</label>
                     <input type="text" name="search" value="<?php echo $_GET['search']; ?>">
                     <input type="button" name="doSearch" value="Search">
                     <input type="button" name="clear" value="Clear Search">
