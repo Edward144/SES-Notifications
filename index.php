@@ -24,7 +24,7 @@
             }
             
             #logTable {
-                min-width: 1440px;
+                min-width: 768px;
             }
             
             table {
@@ -148,6 +148,24 @@
             
             .pagination a:hover {
                 background: #777;
+            }
+            
+            @media only screen and (max-width: 768px) {
+                #logTable tr td:nth-child(3),
+                #logTable tr td:nth-child(4),
+                #logTable tr td:nth-child(6),
+                #logTable tr th:nth-child(3),
+                #logTable tr th:nth-child(4),
+                #logTable tr th:nth-child(6) {
+                    display: none;
+                }
+                
+                #logTable tr td:nth-child(1),
+                #logTable tr th:nth-child(1) {
+                    max-width: 120px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
             }
         </style>
         
