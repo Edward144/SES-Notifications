@@ -456,8 +456,6 @@
                     window.location.href = "/";
                 });
             </script>
-
-            <div style="height: 10000px;"></div>
         </div>
     </body>
 </html>

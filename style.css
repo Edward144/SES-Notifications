@@ -5,9 +5,15 @@ body {
     width: 100vw;
     overflow: hidden;
     margin: 0;
-    padding: 0.5em;
+    padding: 0;
+}
+
+.main {
+    overflow: auto;
+    height: 100vh;
+    width: 100vw;
+    padding: 0 1em;
     box-sizing: border-box;
-    min-height: 20000px;
 }
 
 .legend {
@@ -28,6 +34,12 @@ body {
 
 #logTable {
     min-width: 768px;
+    table-layout: fixed;
+}
+
+#logTable thead th {
+    position: sticky;
+    top: 0;
 }
 
 table {
@@ -44,6 +56,7 @@ table tr td,
 table tr th {
     padding: 0.5em 1em;
     box-sizing: border-box;
+    width: 100%;
 }
 
 table tr td {
