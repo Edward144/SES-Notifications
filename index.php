@@ -23,6 +23,22 @@
                 box-sizing: border-box;
             }
             
+            .legend {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                list-style: none;
+                margin: 1em auto;
+                padding: 0;
+            }
+            
+            .legend li {
+                padding: 0.5em 1em;
+                box-sizing: border-box;
+                width: 33.333%;
+                max-width: 200px;
+            }
+            
             #logTable {
                 min-width: 768px;
             }
@@ -48,14 +64,22 @@
                 word-break: break-all;
             }
             
-            table #bounce td {
+            table .bounce td,
+            .legend .bounce {
                 background: rgba(255, 152, 0, 0.5);
                 color: brown;
             }
             
-            table #complaint td {
+            table .complaint td,
+            .legend .complaint {
                 background: rgba(255, 0, 0, 0.5);
                 color: darkred;
+            }
+            
+            table .delivery td:last-child,
+            .legend .delivery {
+                background: rgba(0, 220, 0, 0.5);
+                color: darkgreen;
             }
             
             .fullOverlay {
@@ -86,6 +110,7 @@
                 box-sizing: border-box;
                 overflow-y: auto;
                 z-index: 2000;
+                word-break: break-all;
             }
             
             .fullMessage #close {
@@ -154,9 +179,11 @@
                 #logTable tr td:nth-child(3),
                 #logTable tr td:nth-child(4),
                 #logTable tr td:nth-child(6),
+                #logTable tr td:nth-child(7),
                 #logTable tr th:nth-child(3),
                 #logTable tr th:nth-child(4),
-                #logTable tr th:nth-child(6) {
+                #logTable tr th:nth-child(6),
+                #logTable tr th:nth-child(7) {
                     display: none;
                 }
                 
@@ -165,6 +192,11 @@
                     max-width: 120px;
                     overflow: hidden;
                     white-space: nowrap;
+                }
+                
+                table .delivery td {
+                    background: rgba(0, 220, 0, 0.5);
+                    color: darkgreen;
                 }
             }
         </style>
@@ -246,8 +278,9 @@
         <p>Click on the Message ID of any row to view more information about that message.</p>
         
         <form id="search">
-            <p>Anything you enter here will be searched across all columns below.<br>
-            You can enter % signs to find anything before or after that point. e.g:<br>
+            <p>Anything you enter here will be searched across all columns below.</p>
+            <p>
+                You can enter % signs to find anything before or after that point. e.g:<br>
                 <code>user@%.com could return user@example.com, user@website.com, etc.<br>
                 %@example.com could return anyone with an email at example.com.</code>
             </p>
@@ -259,6 +292,12 @@
                 <input type="button" name="clear" value="Clear Search">
             </p>
         </form>
+        
+        <ul class="legend">
+            <li class="delivery">Delivery</li>
+            <li class="bounce">Bounce</li>
+            <li class="complaint">Complaint</li>
+        </ul>
         
         <?php echo $pagination; ?>
         
@@ -299,7 +338,7 @@
                                 }
                             }
                         ?>
-                        <tr id="<?php foreach($message as $index => $value) { echo ($index != 'mail' && $index != 'notificationType' ? $index . ' ' : ''); }; ?>">
+                        <tr class="<?php foreach($message as $index => $value) { echo ($index != 'mail' && $index != 'notificationType' ? $index . ' ' : ''); }; ?>">
                             <td><a href="#" onclick="javascript: fullInfo(<?php echo $row['id']; ?>);"><?php echo $message['mail']['messageId']; ?></a></td>
                             <td><?php echo $message['mail']['source']; ?></td>
                             <td><?php echo $message['mail']['sourceIp']; ?></td>
