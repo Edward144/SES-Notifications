@@ -42,6 +42,16 @@ body {
     top: 0;
 }
 
+#logTable tr td:after {
+    content: "";
+    width: calc(100% + 1em);
+    position: absolute;
+    bottom: 0;
+    left: -1em;
+    background: #fff;
+    height: 2px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -63,6 +73,7 @@ table tr td {
     overflow-x: hidden;
     word-break: break-all;
     white-space: nowrap;
+    position: relative;
 }
 
 table .bounce td,
