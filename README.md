@@ -1,7 +1,7 @@
 # SES-Notifications
 A basic log of email status notifications are sent via Amazon SNS POST requests.
 
-I don't expect anyone to find this useful, I am purely setting up this repository for my own reference and backup purposes.
+I don't expect anyone to find this useful, I am purely setting up this repository for my own reference.
 
 # How it works
 
@@ -21,3 +21,7 @@ After setting up the SNS endpoint all you need to do is create a database and en
 The only table needed by the database is `notifications_log` with an auto increment "id" column and a json type "json" column
 
 The `notifications_log` table is checked for and automatically added with the correct columns, via databaseConnect.php
+
+# Console Log
+
+When clicking any Message ID the developer console is cleared and the full JSON for that message is logged to the console. This is to cover showing any potential JSON that I am not aware of or that could be added in future, which will not be shown by the full message pop up.
