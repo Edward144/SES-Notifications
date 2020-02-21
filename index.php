@@ -4,7 +4,7 @@
 
 <html>
     <head>
-        <title>Amazon SES Notification Log | Setsquare</title>
+        <title>Amazon SES Notification Log</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="style.css" type="text/css" rel="stylesheet">
         
@@ -81,7 +81,7 @@
             }
         ?>
         <div class="main">
-            <h1>Amazon SES Email Notifications Log</h1>
+            <h1>Amazon SES Notifications Log</h1>
             <p>Click on the Message ID of any row to view more information about that message.</p>
 
             <form id="search">
