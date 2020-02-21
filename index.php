@@ -47,6 +47,17 @@
                 color: darkred;
             }
             
+            .fullOverlay {
+                cursor: no-drop;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: rgba(0, 0, 0, 0.25);
+            }
+            
             .fullMessage {
                 position: absolute;
                 height: calc(100% - 2em);
@@ -63,6 +74,7 @@
                 padding: 1em;
                 box-sizing: border-box;
                 overflow-y: auto;
+                z-index: 2000;
             }
             
             .fullMessage #close {
@@ -92,6 +104,17 @@
             
             .fullMessage p {
                 margin: 0 auto;
+            }
+            
+            .fullMessage .codeBlock {
+                padding: 1em;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                overflow-x: auto;
+            }
+            
+            .fullMessage .codeBlock pre {
+                white-space: pre-wrap;
             }
             
             .pagination {
@@ -141,7 +164,7 @@
                 exit();
             }
             //If request is a notification, push it to the database
-            elseif($jsonArray['Type'] == 'Notification') {
+            elseif($jsonArray['Type'] == 'Notification' && $jsonArray['message']['notificationType'] != 'AmazonSnsSubscriptionSucceeded') {
                 $insert = $mysqli->prepare("INSERT INTO `notifications_log` (json) VALUES(?)");
                 $insert->bind_param('s', $jsonDb);
                 $insert->execute();
@@ -285,8 +308,16 @@
                     dataType: 'json',
                     data: ({id}),
                     success: function(data) {
+                        console.clear();
+                        console.log(data);
+                        
                         var messageDetails = 'No information available';
                         var timestamp = '';
+                        
+                        $("body").css("overflow", "hidden");
+                        $("body").append(`
+                            <div class="fullOverlay"></div>
+                        `);
                         
                         if(data['notificationType'] == 'Bounce') {
                             var bouncedRecipients = '';
@@ -479,6 +510,28 @@
                             </table>
                         `;
                         
+                        //Append Headers
+                        if(data['mail']['headers']) {
+                            messageDetails += `
+                                <hr>
+
+                                <h2>Original headers</h2>
+                                
+                                <div class="codeBlock">
+                                    <code>
+                                        <label>Truncated:</label>
+                                        <span>` + data['mail']['headersTruncated'] + `</span>
+                                    </code>
+
+                                    <h4>Headers</h4>
+                                    <pre>` + JSON.stringify(data['mail']['headers'], null, 4) + `</pre>
+
+                                    <h4>Common Headers</h4>
+                                    <pre>` + JSON.stringify(data['mail']['commonHeaders'], null, 4) + `</pre>
+                                </div>
+                            `;
+                        }
+                        
                         $("body").append(`
                             <div class="fullMessage">
                                 <span id="close"><span>X</span></span>
@@ -491,9 +544,14 @@
                 })
             }
             
-            $("body").on("click", ".fullMessage #close", function() {
-                $(this).closest(".fullMessage").remove();
-            });
+            function closeFull() {
+                $(".fullMessage").remove();
+                $(".fullOverlay").remove();
+                $("body").css("overflow", "");
+            }
+            
+            $("body").on("click", ".fullMessage #close", closeFull);
+            $("body").on("click", ".fullOverlay", closeFull);
             
             //Ajax to update rows            
             function refresh() {
@@ -507,8 +565,6 @@
                         data: ({latestRow}),
                         success: function(data) {
                             $("#logTable tbody").prepend(data);
-                            
-                            console.log(data);
                         }
                     });
                 }
