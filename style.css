@@ -42,25 +42,6 @@ body {
     top: 0;
 }
 
-#logTable tr td::-webkit-scrollbar {
-    height: 5px;
-}
-
-#logTable tr td::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 100px;
-    opacity: 0;
-    transition: opacity ease 0.5s;
-}
-
-#logTable tr td::-webkit-scrollbar-thumb:active {
-    background: #aaa;
-}
-
-table tr td:hover {
-    overflow-x: auto;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
