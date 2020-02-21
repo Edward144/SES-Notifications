@@ -146,7 +146,7 @@
                                 }
                             ?>
                             <tr class="<?php foreach($message as $index => $value) { echo ($index != 'mail' && $index != 'notificationType' ? $index . ' ' : ''); }; ?>">
-                                <td><a href="#" onclick="javascript: fullInfo(<?php echo $row['id']; ?>);"><?php echo $message['mail']['messageId']; ?></a></td>
+                                <td><a href="#" onclick="javascript: fullInfo(<?php echo $row['id']; ?>);"><?php echo (strlen($message['mail']['messageId']) > 20 ? substr($message['mail']['messageId'], 0, 20) . '...' : $message['mail']['messageId']); ?></a></td>
                                 <td><?php echo $message['mail']['source']; ?></td>
                                 <td><?php echo $message['mail']['sourceIp']; ?></td>
                                 <td><?php echo date('d/m/Y H:i:s', strtotime($message['mail']['timestamp'])); ?></td>

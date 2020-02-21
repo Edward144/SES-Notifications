@@ -35,7 +35,7 @@
             
             array_push($data,
                 '<tr ' . ($message['bounce'] ? 'id="bounce"' : ($message['complaint'] ? 'id="complaint"' : '')) . '>' .
-                    '<td><a href="#" onclick="javascript: fullInfo(' . $row['id'] . ');">' . $message['mail']['messageId'] . '</a></td>' .
+                    '<td><a href="#" onclick="javascript: fullInfo(' . $row['id'] . ');">' . (strlen($message['mail']['messageId']) > 20 ? substr($message['mail']['messageId'], 0, 20) . '...' : $message['mail']['messageId']) . '</a></td>' .
                     '<td>' . $message['mail']['source']. '</td>' .
                     '<td>' . $message['mail']['sourceIp'] . '</td>' .
                     '<td>' . date('d/m/Y H:i:s', strtotime($message['mail']['timestamp'])) . '</td>' .
