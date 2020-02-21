@@ -16,3 +16,5 @@ getInfo.php is accessed via AJAX request and includes the code to pull the JSON 
 refreshRows.php is also accessed via AJAX request every 5 seconds to pull in any new rows that have been added to the database, and prepends that information to the top of the log table.
 
 After setting up the SNS endpoint all you need to do is create a database and enter the correct details into databaseConnect.php
+
+The only table needed by the database is `notifications_log` with an auto increment "id" column and a json type "json" column
