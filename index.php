@@ -105,7 +105,7 @@
                 ?>
                 <h3>
                     <label>Requests this month:</label>
-                    <span><?php echo $cMonth; ?> of 100,000</span>
+                    <span id="ajaxCounter"><?php echo $cMonth; ?> of 100,000</span>
                 </h3>
                 
                 <h3>
@@ -473,7 +473,8 @@
                             dataType: 'json',
                             data: ({latestRow}),
                             success: function(data) {
-                                $("#logTable tbody").prepend(data);
+                                $("#logTable tbody").prepend(data[0]);
+                                $("#ajaxCounter").html(data[1] + " of 100,000");
                             }
                         });
                     }

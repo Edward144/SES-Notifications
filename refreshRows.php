@@ -59,7 +59,11 @@
             );
         }
         
-        echo json_encode(implode($data));
+        $currMonth = date('M_Y');
+        $counter = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'");
+        $counter = ($counter->num_rows == 1 ? $counter->fetch_array()[0] : 0);
+        
+        echo json_encode([implode($data), $counter]);
     }
 
 ?>
