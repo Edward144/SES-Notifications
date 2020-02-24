@@ -47,7 +47,7 @@
             if($_GET['search']) {
                 $search = '%' . $_GET['search'] . '%';
                 
-                $log = $mysqli->prepare("SELECT * FROM `notifications_log` WHERE json LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?");
+                $log = $mysqli->prepare("SELECT * FROM `notifications_log` WHERE SUBSTRING_INDEX(json, 'headers', 1) LIKE ? ORDER BY id DESC LIMIT ? OFFSET ?");
                 $log->bind_param('sii', $search, $limit, $offset);
                 $log->execute();
                 $log = $log->get_result();
