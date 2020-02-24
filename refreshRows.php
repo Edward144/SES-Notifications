@@ -16,7 +16,8 @@
             $message = json_decode($json['Message'], true);
             
             $recipients = [];
-                            
+            $classes = [];
+            
             if($message['notificationType'] == 'Delivery') {
                 foreach($message['mail']['destination'] as $recipient) { 
                     array_push($recipients, $recipient); 
@@ -33,8 +34,14 @@
                 }
             }
             
+            foreach($message as $index => $value) {  
+                if($index != 'mail' && $index != 'notificationType') {
+                    array_push($classes, $index);
+                }
+            }
+            
             array_push($data,
-                '<tr ' . ($message['bounce'] ? 'id="bounce"' : ($message['complaint'] ? 'id="complaint"' : '')) . '>' .
+                '<tr class="' . implode(' ', $classes) . '">' .
                     '<td><a href="#" onclick="javascript: fullInfo(' . $row['id'] . ');">' . (strlen($message['mail']['messageId']) > 20 ? substr($message['mail']['messageId'], 0, 20) . '...' : $message['mail']['messageId']) . '</a></td>' .
                     '<td>' . $message['mail']['source']. '</td>' .
                     '<td>' . $message['mail']['sourceIp'] . '</td>' .

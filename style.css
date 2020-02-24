@@ -63,6 +63,7 @@ input[type="submit"]:hover {
 #logTable thead th {
     position: sticky;
     top: 0;
+    z-index: 10;
 }
 
 #logTable tr td:after {
@@ -73,6 +74,7 @@ input[type="submit"]:hover {
     left: -1em;
     background: #fff;
     height: 2px;
+    z-index: 1;
 }
 
 table {
