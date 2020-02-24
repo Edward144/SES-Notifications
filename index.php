@@ -17,6 +17,21 @@
              
             //Escape the backslashes so they aren't lost when inserting into database
             $jsonDb = file_get_contents('php://input');
+            
+            //Increment request counter, add new month if needed
+            $currMonth = date('M_Y');
+            $prevMonth = date('M_Y', strtotime('-1 Month', $currMonth));
+        
+            if($jsonArray['Type']) {                
+                monthCheck:
+                if($mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'")->num_rows == 1) {
+                    $mysqli->query("UPDATE `requests_log` SET counter = (counter + 1) WHERE month = '{$currMonth}'");
+                }
+                else {
+                    $mysqli->query("INSERT INTO `requests_log` (month) VALUES('{$currMonth}')");
+                    goto monthCheck;
+                }
+            }
         
             //If request is a new subscription, accept it
             if($jsonArray['Type'] == 'SubscriptionConfirmation') {
@@ -81,30 +96,50 @@
             }
         ?>
         <div class="main">
-            <h1>Amazon SES Notifications Log</h1>
-            <p>Click on the Message ID of any row to view more information about that message.</p>
+            <div class="requestCounter">
+                <?php 
+                    $cMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'");
+                    $cMonth = ($cMonth->num_rows > 0 ? $cMonth->fetch_array()[0] : 0);
+                    $pMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$prevMonth}' LIMIT 1");
+                    $pMonth = ($cMonth->num_rows > 0 ? $cMonth->fetch_array()[0] : 0);
+                ?>
+                <h3>
+                    <label>Requests this month:</label>
+                    <span><?php echo $cMonth; ?> of 100,000</span>
+                </h3>
+                
+                <h3>
+                    <label>Requests last month:</label>
+                    <span><?php echo $pMonth; ?> of 100,000</span>
+                </h3>
+            </div>
+            
+            <div class="content">
+                <h1>Amazon SES Notifications Log</h1>
+                <p>Click on the Message ID of any row to view more information about that message.</p>
 
-            <form id="search">
-                <p>Anything you enter here will be searched across all columns below.</p>
-                <p>
-                    You can enter % signs to find anything before or after that point. e.g:<br>
-                    <code>user@%.com could return user@example.com, user@website.com, etc.<br>
-                    %@example.com could return anyone with an email at example.com.</code>
-                </p>
+                <form id="search">
+                    <p>Anything you enter here will be searched across all columns below.</p>
+                    <p>
+                        You can enter % signs to find anything before or after that point. e.g:<br>
+                        <code>user@%.com could return user@example.com, user@website.com, etc.<br>
+                        %@example.com could return anyone with an email at example.com.</code>
+                    </p>
 
-                <p>
-                    <input type="text" name="search" value="<?php echo $_GET['search']; ?>">
-                    <input type="button" name="doSearch" value="Search">
-                    <input type="button" name="clear" value="Clear Search">
-                </p>
-            </form>
+                    <p>
+                        <input type="text" name="search" value="<?php echo $_GET['search']; ?>">
+                        <input type="button" name="doSearch" value="Search">
+                        <input type="button" name="clear" value="Clear Search">
+                    </p>
+                </form>
 
-            <ul class="legend">
-                <li class="delivery">Delivery</li>
-                <li class="bounce">Bounce</li>
-                <li class="complaint">Complaint</li>
-            </ul>
-
+                <ul class="legend">
+                    <li class="delivery">Delivery</li>
+                    <li class="bounce">Bounce</li>
+                    <li class="complaint">Complaint</li>
+                </ul>
+            </div>
+            
             <?php echo $pagination; ?>
 
             <?php if($log->num_rows > 0) : ?>

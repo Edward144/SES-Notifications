@@ -12,6 +12,11 @@ body {
     overflow: auto;
     height: 100vh;
     width: 100vw;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content {
     padding: 0 1em;
     box-sizing: border-box;
 }
@@ -30,6 +35,24 @@ body {
     box-sizing: border-box;
     width: 33.333%;
     max-width: 200px;
+}
+
+.requestCounter {
+    float: right;
+    text-align: right;
+    margin-right: 0;
+    margin-left: auto;
+    background: #ccc;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+}
+
+.requestCounter h3 {
+    font-size: 0.75em;
+}
+
+.requestCounter h3 span {
+    font-weight: normal;
 }
 
 input[type="text"] {
@@ -212,7 +235,18 @@ table .delivery td:last-child,
     background: #777;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {    
+    .requestCounter {
+        float: none;
+        display: flex;
+        justify-content: flex-start;
+        align-content: center;
+    }
+    
+    .requestCounter h3 {
+        margin: 1em;
+    }
+    
     #logTable tr td:nth-child(3),
     #logTable tr td:nth-child(4),
     #logTable tr td:nth-child(6),
