@@ -20,7 +20,7 @@
             
             //Increment request counter, add new month if needed
             $currMonth = date('M_Y');
-            $prevMonth = date('M_Y', strtotime('-1 Month', $currMonth));
+            $prevMonth = date('M_Y', strtotime('-1 Month'));
         
             if($jsonArray['Type']) {                
                 monthCheck:
@@ -101,7 +101,7 @@
                     $cMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'");
                     $cMonth = ($cMonth->num_rows > 0 ? $cMonth->fetch_array()[0] : 0);
                     $pMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$prevMonth}' LIMIT 1");
-                    $pMonth = ($cMonth->num_rows > 0 ? $cMonth->fetch_array()[0] : 0);
+                    $pMonth = ($pMonth->num_rows > 0 ? $pMonth->fetch_array()[0] : 0);
                 ?>
                 <h3>
                     <label>Requests this month:</label>
@@ -484,7 +484,9 @@
 
                 //Search functionality
                 $("input[name='doSearch']").click(function() {
-                    window.location.href = "?search=" + $("input[name='search']").val();
+                    if($("input[name='search']").val() != null && $("input[name='search']").val() != "") {
+                        window.location.href = "?search=" + $("input[name='search']").val();
+                    }
                 });
 
                 $("input[name='clear']").click(function() {
