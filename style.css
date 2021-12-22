@@ -214,20 +214,26 @@ table .delivery td:last-child,
 
 .pagination {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: 100%;
     padding: 0.5em 0;
     box-sizing: border-box;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .pagination a {
     margin: 0.5em;
     padding: 0.5em;
+    width: 35px;
+    height: 35px;
     box-sizing: border-box;
     text-decoration: none;
     color: #fff;
     background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pagination a:hover {
