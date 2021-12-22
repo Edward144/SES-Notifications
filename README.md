@@ -5,7 +5,7 @@ I don't expect anyone to find this useful, I am purely setting up this repositor
 
 # How it works
 
-index.php should be setup as the HTTPS endpoint within Amazon SNS, when a POST request comes across the type of the request will be checked. Either for a SubscriptionConfirmation to accept a new topic subscription or a Notification.
+logNotifications.php should be setup as the HTTPS endpoint within Amazon SNS, when a POST request comes across the type of the request will be checked. Either for a SubscriptionConfirmation to accept a new topic subscription or a Notification.
 
 If the type is a Notification then the JSON will be inserted into a database. 
 
