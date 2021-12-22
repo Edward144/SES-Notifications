@@ -12,50 +12,7 @@
     </head>
     
     <body>       
-        <?php
-            $jsonArray = json_decode(file_get_contents('php://input'), true);
-             
-            //Escape the backslashes so they aren't lost when inserting into database
-            $jsonDb = file_get_contents('php://input');
-            
-            //Increment request counter, add new month if needed
-            $currMonth = date('M_Y');
-            $prevMonth = date('M_Y', strtotime('-1 Month'));
-        
-            if($jsonArray['Type']) {                
-                monthCheck:
-                if($mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'")->num_rows == 1) {
-                    $mysqli->query("UPDATE `requests_log` SET counter = (counter + 1) WHERE month = '{$currMonth}'");
-                }
-                else {
-                    $mysqli->query("INSERT INTO `requests_log` (month) VALUES('{$currMonth}')");
-                    goto monthCheck;
-                }
-            }
-        
-            //If request is a new subscription, accept it
-            if($jsonArray['Type'] == 'SubscriptionConfirmation') {
-                $subscribeUrl = $jsonArray['SubscribeURL'];
-
-                //Visit the subscribe url to confirm
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $subscribeUrl);
-                curl_setopt($ch, CURLOPT_HEADER, 0);
-                curl_exec($ch);
-                curl_close($ch);
-
-                exit();
-            }
-            //If request is a notification, push it to the database
-            elseif($jsonArray['Type'] == 'Notification' && $jsonArray['message']['notificationType'] != 'AmazonSnsSubscriptionSucceeded') {
-                $insert = $mysqli->prepare("INSERT INTO `notifications_log` (json) VALUES(?)");
-                $insert->bind_param('s', $jsonDb);
-                $insert->execute();
-                $insert->close();
-                
-                exit();
-            }
-            
+        <?php         
             $limit = 1000;
             $offset = (isset($_GET['page']) && $_GET['page'] > 0 ? ($_GET['page'] * $limit) - $limit : 0);
             
@@ -67,10 +24,10 @@
                 $log->execute();
                 $log = $log->get_result();
                 
-                $numRows = $mysqli->prepare("SELECT * FROM `notifications_log` WHERE json LIKE ?");
+                $numRows = $mysqli->prepare("SELECT COUNT(*) FROM `notifications_log` WHERE json LIKE ?");
                 $numRows->bind_param('s', $search);
                 $numRows->execute();
-                $numRows = $numRows->get_result()->num_rows;
+                $numRows = $numRows->get_result()->fetch_array()[0];
             }
             else {
                 $log = $mysqli->prepare("SELECT * FROM `notifications_log` ORDER BY id DESC LIMIT ? OFFSET ?");
@@ -78,7 +35,7 @@
                 $log->execute();
                 $log = $log->get_result();
                 
-                $numRows = $mysqli->query("SELECT * FROM `notifications_log`")->num_rows;
+                $numRows = $mysqli->query("SELECT COUNT(*) FROM `notifications_log`")->fetch_array()[0];
             }
         
             $pages = ceil($numRows / $limit);
@@ -87,8 +44,10 @@
         
             if($pages > 1) {
                 $pagination .= '<div class="pagination">';
+                $minPage = (($_GET['page'] - 5) <= 1 ? 1 : $_GET['page'] - 5);
+                $maxPage = (($_GET['page']) + 5 >= $pages ? $pages : $_GET['page'] + 5);
                 
-                for($i = 1; $i <= $pages; $i++) {
+                for($i = $minPage; $i <= $maxPage; $i++) {
                     $pagination .= '<a href="https://' . $_SERVER['SERVER_NAME'] . explode($pre . 'page', $_SERVER['REQUEST_URI'])[0] . $pre .'page=' . $i . '">' . $i . '</a>';
                 }
                 
