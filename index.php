@@ -67,12 +67,12 @@
                 ?>
                 <h3>
                     <label>Requests this month:</label>
-                    <span id="ajaxCounter"><?php echo $cMonth; ?> of 100,000</span>
+                    <span id="ajaxCounter"><?php echo $cMonth; ?> of 85,000</span>
                 </h3>
                 
                 <h3>
                     <label>Requests last month:</label>
-                    <span><?php echo $pMonth; ?> of 100,000</span>
+                    <span><?php echo $pMonth; ?> of 85,000</span>
                 </h3>
             </div>
             
@@ -436,7 +436,7 @@
                             data: ({latestRow}),
                             success: function(data) {
                                 $("#logTable tbody").prepend(data[0]);
-                                $("#ajaxCounter").html(data[1] + " of 100,000");
+                                $("#ajaxCounter").html(data[1] + " of 85,000");
                             }
                         });
                     }
