@@ -57,6 +57,9 @@
         <div class="main">
             <div class="requestCounter">
                 <?php 
+		    $currMonth = date('M_Y');
+		    $prevMonth = date('M_Y', strtotime('-1 month'));
+
                     $cMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$currMonth}'");
                     $cMonth = ($cMonth->num_rows > 0 ? $cMonth->fetch_array()[0] : 0);
                     $pMonth = $mysqli->query("SELECT counter FROM `requests_log` WHERE month = '{$prevMonth}' LIMIT 1");
